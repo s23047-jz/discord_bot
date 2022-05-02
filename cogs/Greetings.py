@@ -4,7 +4,8 @@ from discord import Intents
 from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_choice, create_option
 
-SERVER_ID = 710091413903114241
+import __main__
+
 
 class Greetings(commands.Cog):
     def __init__(self, bot):
@@ -18,7 +19,7 @@ class Greetings(commands.Cog):
     # async def hi(self, ctx):
     #     await ctx.send("hi")
 
-    @cog_ext.cog_slash(name="hello", description="sending hello message", guild_ids=[SERVER_ID])
+    @cog_ext.cog_slash(name="hello", description="sending hello message", guild_ids=[__main__.Config.guild_id])
     async def _hello(self, ctx):
         await ctx.send("hello from bot")
 
@@ -53,11 +54,15 @@ class Greetings(commands.Cog):
                     create_choice(
                         name="birthday",
                         value="Happy birthday to You, Happy birthday to You"
+                    ),
+                    create_choice(
+                        name="wake_up",
+                        value='Wake UP'
                     )
                 ]
             )
         ],
-        guild_ids=[SERVER_ID]
+        guild_ids=[__main__.Config.guild_id]
     )
     async def greetings_a_member(self, ctx, user:discord.User, greetings:str):
         await ctx.send(f"{greetings} {user.mention} from {ctx.author.mention} ")
